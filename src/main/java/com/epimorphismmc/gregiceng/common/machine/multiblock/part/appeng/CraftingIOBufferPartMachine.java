@@ -213,7 +213,14 @@ public class CraftingIOBufferPartMachine extends MEPartMachine
 
         if (!isWorkingEnabled() && returnBuffer.isEmpty()) return;
 
+        if (returnBuffer == null) {
+            returnBuffer = new Object2LongOpenHashMap<>();
+            return;
+        }
+
         if (getMainNode().isActive() && !this.returnBuffer.isEmpty()) {
+            var grid = getMainNode().getGrid();
+            if (grid == null) return;
             MEStorage aeNetwork = this.getMainNode().getGrid().getStorageService().getInventory();
             var iterator = returnBuffer.object2LongEntrySet().fastIterator();
             while (iterator.hasNext()) {
